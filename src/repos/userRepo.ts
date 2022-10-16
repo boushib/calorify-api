@@ -11,7 +11,17 @@ export class UserRepo {
     return rows[0]
   }
 
-  static async create({ username, name, email, password }) {
+  static async create({
+    username,
+    name,
+    email,
+    password,
+  }: {
+    username: string
+    name: string
+    email: string
+    password: string
+  }) {
     const { rows } = await pool.query(
       `INSERT INTO users (username, name, email, password) VALUES($1, $2, $3, $4) RETURNING *`,
       [username, name, email, password]
@@ -19,10 +29,22 @@ export class UserRepo {
     return rows[0]
   }
 
-  static async update({ id, username, name, email }) {
+  static async update({
+    id,
+    username,
+    name,
+    email,
+    gender,
+  }: {
+    id: number
+    username: string
+    name: string
+    email: string
+    gender: 'M' | 'F'
+  }) {
     const { rows } = await pool.query(
-      `UPDATE users SET username = $1, name = $2, email = $3 WHERE id = $4 RETURNING *`,
-      [username, name, email, id]
+      `UPDATE users SET username = $1, name = $2, email = $3, gender = $4, updated_at = CURRENT_TIMESTAMP WHERE id = $5 RETURNING *`,
+      [username, name, email, gender, id]
     )
     return rows[0]
   }

@@ -40,10 +40,10 @@ export const createUser = async (req: Request, res: Response) => {
 
 export const updateUser = async (req: Request, res: Response) => {
   const id = Number(req.params.id)
-  const { username, name, email } = req.body
+  const { username, name, email, gender } = req.body
 
   try {
-    const user = await UserRepo.update({ id, username, name, email })
+    const user = await UserRepo.update({ id, username, name, email, gender })
     return res.status(200).json({ ...user, password: undefined })
   } catch (err) {
     console.log(err)
